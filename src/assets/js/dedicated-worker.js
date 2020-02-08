@@ -29,7 +29,14 @@ function fetchData() {
 }
 
 function filterStudents(filter) {
-  self.postMessage({
-    students: students.filter(({ name: { first, last } }) => (`${first} ${last}`.startsWith(filter) || last.startsWith(filter)))
-  })
+  if(filter.includes(':')) {
+    const parts = filter.split(':');
+    self.postMessage({
+      students: students.filter((stu) => stu[parts[0].toLowerCase()].startsWith(parts[1].trim()))
+    })
+  } else {
+    self.postMessage({
+      students: students.filter(({ name: { first, last } }) => (`${first} ${last}`.startsWith(filter) || last.startsWith(filter)))
+    })
+  }
 }

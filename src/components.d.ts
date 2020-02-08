@@ -13,9 +13,9 @@ export namespace Components {
   interface AppHome {}
   interface AppRoot {}
   interface StudentList {
-    'filterFunc': Function;
     'students': any;
   }
+  interface StudentRoot {}
 }
 
 declare global {
@@ -38,10 +38,17 @@ declare global {
     prototype: HTMLStudentListElement;
     new (): HTMLStudentListElement;
   };
+
+  interface HTMLStudentRootElement extends Components.StudentRoot, HTMLStencilElement {}
+  var HTMLStudentRootElement: {
+    prototype: HTMLStudentRootElement;
+    new (): HTMLStudentRootElement;
+  };
   interface HTMLElementTagNameMap {
     'app-home': HTMLAppHomeElement;
     'app-root': HTMLAppRootElement;
     'student-list': HTMLStudentListElement;
+    'student-root': HTMLStudentRootElement;
   }
 }
 
@@ -49,14 +56,15 @@ declare namespace LocalJSX {
   interface AppHome {}
   interface AppRoot {}
   interface StudentList {
-    'filterFunc'?: Function;
     'students'?: any;
   }
+  interface StudentRoot {}
 
   interface IntrinsicElements {
     'app-home': AppHome;
     'app-root': AppRoot;
     'student-list': StudentList;
+    'student-root': StudentRoot;
   }
 }
 
@@ -69,6 +77,7 @@ declare module "@stencil/core" {
       'app-home': LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
       'app-root': LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
       'student-list': LocalJSX.StudentList & JSXBase.HTMLAttributes<HTMLStudentListElement>;
+      'student-root': LocalJSX.StudentRoot & JSXBase.HTMLAttributes<HTMLStudentRootElement>;
     }
   }
 }
