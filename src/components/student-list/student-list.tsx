@@ -14,15 +14,15 @@ export class StudentList {
   render() {
     return (
       <div class="main">
-        <div class="row">
-          <div class="small-12 columns text-center">
-            {this.students
-              .map(student => (
+        <ion-list>
+          {this.students
+            .map(student => (
+              <ion-list-item class="text-center">
                 <StudentDisplay student={student}></StudentDisplay>
-              ))
-            }
-          </div>
-        </div>
+              </ion-list-item>
+            ))
+          }
+        </ion-list>
       </div>
     );
   }
