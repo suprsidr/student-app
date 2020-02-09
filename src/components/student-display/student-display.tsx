@@ -57,4 +57,4 @@ export const StudentDisplay: FunctionalComponent<StudentProps> = ({ student }) =
       <p>ID: <span class="grey-text">{student.sid}</span></p>
     </ion-card-content>
   </ion-card>
-    );
+);

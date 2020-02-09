@@ -1,5 +1,4 @@
 import { Component, State, h } from '@stencil/core';
-// import { StudentList } from '../student-list/student-list';
 
 type Name = {
   first: string,
@@ -46,7 +45,6 @@ export class StudentRoot {
 
   componentDidLoad(): void {
     this.worker.onmessage = ({ data }) => {
-      console.log(data);
       this.students = data.students;
     };
     this.worker.postMessage({ action: 'fetchData', args: {} });
@@ -62,10 +60,10 @@ export class StudentRoot {
       <ion-content class="ion-padding">
         <ion-searchbar animated debounce={1500} onIonChange={(e) => this.handleSelectChange(e)}></ion-searchbar>
         {this.students.length === 0 &&
-        <div class="text-center">
-          <p>&nbsp;</p>
-          <ion-spinner name="bubbles"></ion-spinner>
-        </div>
+          <div class="text-center">
+            <p>&nbsp;</p>
+            <ion-spinner name="bubbles"></ion-spinner>
+          </div>
         }
         <student-list students={this.students}></student-list>
       </ion-content>
