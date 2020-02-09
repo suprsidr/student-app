@@ -64,7 +64,7 @@ export class StudentRoot {
         {this.students.length === 0 &&
         <div class="text-center">
           <p>&nbsp;</p>
-          <ion-spinner></ion-spinner>
+          <ion-spinner name="bubbles"></ion-spinner>
         </div>
         }
         <student-list students={this.students}></student-list>
