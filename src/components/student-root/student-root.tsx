@@ -1,4 +1,4 @@
-import { Component, State, h } from '@stencil/core';
+import { Component, State, h, Listen } from '@stencil/core';
 
 type Name = {
   first: string,
@@ -42,6 +42,11 @@ export class StudentRoot {
   @State() students: Student[] = [];
 
   worker: Worker = new Worker('/assets/js/dedicated-worker.js');
+
+  @Listen('testEvent')
+  testEventHandler(event: CustomEvent) {
+    console.log('Received the custom testEvent event: ', event.detail);
+  }
 
   componentDidLoad(): void {
     this.worker.onmessage = ({ data }) => {

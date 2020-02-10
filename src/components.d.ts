@@ -66,6 +66,7 @@ declare namespace LocalJSX {
   interface AppHome {}
   interface AppRoot {}
   interface StudentDisplay {
+    'onTestEvent'?: (event: CustomEvent<any>) => void;
     'student'?: any;
   }
   interface StudentList {

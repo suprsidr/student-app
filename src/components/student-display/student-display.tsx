@@ -1,14 +1,33 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 
 @Component({
   tag: 'student-display',
   styleUrl: 'student-display.css',
-  shadow: false
+  shadow: true
 })
 
 export class StudentDisplay {
 
   @Prop() student: any;
+
+  @State() editing: boolean = false;
+
+  @Event({
+    eventName: 'testEvent',
+    composed: true,
+    cancelable: true,
+    bubbles: true,
+  }) testEvent: EventEmitter;
+
+  editClickHandler() {
+    this.editing = !this.editing;
+    this.testEvent.emit(this.student);
+  }
+
+  saveClickHandler() {
+    this.editing = !this.editing;
+    this.testEvent.emit(this.student);
+  }
 
   render() {
     const student = this.student;
@@ -31,6 +50,15 @@ export class StudentDisplay {
           <p>Last updated: <span class="grey-text">{new Date(student.modified).toUTCString()}</span></p>
           <p>Modified by: <span class="grey-text">{student.modifiedby}</span></p>
           <p>ID: <span class="grey-text">{student.sid}</span></p>
+          {!this.editing &&
+            <ion-button disabled={this.editing} onClick={() => this.editClickHandler()}>Edit</ion-button>
+          }
+          {this.editing &&
+            <ion-button style={{ '--background': '#10dc60' }} disabled={!this.editing} onClick={() => this.saveClickHandler()}>Save</ion-button>
+          }
+          {this.editing &&
+            <ion-button style={{ '--background': '#f04141' }} disabled={!this.editing} onClick={() => this.saveClickHandler()}>Delete</ion-button>
+          }
         </ion-card-content>
       </ion-card>
     )
