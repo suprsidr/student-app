@@ -51,6 +51,7 @@ export class StudentRoot {
   }
 
   handleSelectChange({ target }): void {
+    this.students = [];
     const filter = (target.value || 'A').split(' ').map(part => `${part.charAt(0).toUpperCase()}${part.slice(1)}`).join(' ');
     this.worker.postMessage({ action: 'filterStudents', args: { filter } });
   }

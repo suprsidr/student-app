@@ -1,5 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
-import { StudentDisplay } from '../student-display/student-display';
+// import { StudentDisplay } from '../student-display/student-display';
 
 @Component({
   tag: 'student-list',
@@ -18,7 +18,7 @@ export class StudentList {
           {this.students
             .map(student => (
               <ion-list-item class="text-center">
-                <StudentDisplay student={student}></StudentDisplay>
+                <student-display student={student}></student-display>
               </ion-list-item>
             ))
           }

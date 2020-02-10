@@ -12,6 +12,9 @@ import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 export namespace Components {
   interface AppHome {}
   interface AppRoot {}
+  interface StudentDisplay {
+    'student': any;
+  }
   interface StudentList {
     'students': any;
   }
@@ -33,6 +36,12 @@ declare global {
     new (): HTMLAppRootElement;
   };
 
+  interface HTMLStudentDisplayElement extends Components.StudentDisplay, HTMLStencilElement {}
+  var HTMLStudentDisplayElement: {
+    prototype: HTMLStudentDisplayElement;
+    new (): HTMLStudentDisplayElement;
+  };
+
   interface HTMLStudentListElement extends Components.StudentList, HTMLStencilElement {}
   var HTMLStudentListElement: {
     prototype: HTMLStudentListElement;
@@ -47,6 +56,7 @@ declare global {
   interface HTMLElementTagNameMap {
     'app-home': HTMLAppHomeElement;
     'app-root': HTMLAppRootElement;
+    'student-display': HTMLStudentDisplayElement;
     'student-list': HTMLStudentListElement;
     'student-root': HTMLStudentRootElement;
   }
@@ -55,6 +65,9 @@ declare global {
 declare namespace LocalJSX {
   interface AppHome {}
   interface AppRoot {}
+  interface StudentDisplay {
+    'student'?: any;
+  }
   interface StudentList {
     'students'?: any;
   }
@@ -63,6 +76,7 @@ declare namespace LocalJSX {
   interface IntrinsicElements {
     'app-home': AppHome;
     'app-root': AppRoot;
+    'student-display': StudentDisplay;
     'student-list': StudentList;
     'student-root': StudentRoot;
   }
@@ -76,6 +90,7 @@ declare module "@stencil/core" {
     interface IntrinsicElements {
       'app-home': LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
       'app-root': LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
+      'student-display': LocalJSX.StudentDisplay & JSXBase.HTMLAttributes<HTMLStudentDisplayElement>;
       'student-list': LocalJSX.StudentList & JSXBase.HTMLAttributes<HTMLStudentListElement>;
       'student-root': LocalJSX.StudentRoot & JSXBase.HTMLAttributes<HTMLStudentRootElement>;
     }
