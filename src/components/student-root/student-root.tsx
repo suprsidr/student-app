@@ -43,17 +43,18 @@ export class StudentRoot {
 
   worker: Worker = new Worker('/assets/js/dedicated-worker.js');
 
-  @Listen('testEvent')
-  testEventHandler(event: CustomEvent) {
-    console.log('Received the custom testEvent event: ', event.detail);
+  @Listen('changeEvent')
+  changeEventHandler(event: CustomEvent) {
+    console.log('Received the custom changeEvent event: ', event.detail);
+    this.worker.postMessage(event.detail);
   }
 
   componentDidLoad(): void {
     this.worker.onmessage = ({ data }) => {
-      console.log(this.students.length);
+      console.log(data.students.length);
       this.students = data.students;
     };
-    this.worker.postMessage({ action: 'fetchData', args: {} });
+    this.worker.postMessage({ action: 'fetchStudents', args: {} });
   }
 
   handleSelectChange({ target }): void {

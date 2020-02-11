@@ -19,11 +19,11 @@ export class StudentDisplay {
   editContainer!: HTMLFormElement;
 
   @Event({
-    eventName: 'testEvent',
+    eventName: 'changeEvent',
     composed: true,
     cancelable: true,
     bubbles: true,
-  }) testEvent: EventEmitter;
+  }) changeEvent: EventEmitter;
 
   componentWillLoad(): void {
     // console.log('componentWillLoad', this.student);
@@ -35,25 +35,23 @@ export class StudentDisplay {
     this.studentContainer.classList.toggle('open');
   }
 
-  saveClickHandler() {
+  updateClickHandler() {
     this.editing = !this.editing;
     this.studentContainer.classList.toggle('open');
-    console.log(this.tmpStudent);
-    this.testEvent.emit({action: 'save', student: this.student});
+    this.changeEvent.emit({ action: 'updateStudent', args: { student: this.tmpStudent }});
   }
 
   deleteClickHandler() {
     this.editing = !this.editing;
     this.studentContainer.classList.toggle('open');
-    console.log(this.tmpStudent);
-    this.testEvent.emit({ action: 'delete', student: this.student });
+    this.changeEvent.emit({ action: 'deleteStudent', args: { student: this.tmpStudent } });
   }
 
   handleChange({ target }) {
+    // this is ugly
     const arr = target.id.split('.');
     if (arr.length === 1) {
       this.tmpStudent[arr[0]] = target.value;
-      return;
     } else {
       this.tmpStudent[arr[0]][arr[1]] = target.value;
     }
@@ -69,13 +67,12 @@ export class StudentDisplay {
     )
     return (
       <ion-card>
-        <ion-card-header>
-          {!this.editing && [
-            <img class="student-image-large" src={`${student.picture.large}`} alt={`${student.name.last} ${student.name.first}`} />,
-            <ion-card-title>{`${student.name.first} ${student.name.last}`}</ion-card-title>]
-          }
-        </ion-card-header>
-
+        {!this.editing &&
+          <ion-card-header>
+            <img class="student-image-large" src={`${student.picture.large}`} alt={`${student.name.last} ${student.name.first}`} />
+            <ion-card-title>{`${student.name.first} ${student.name.last}`}</ion-card-title>
+          </ion-card-header>
+        }
         <ion-card-content>
           <div class="student-container" ref={(el) => this.studentContainer = el as HTMLElement}>
             <div>
@@ -91,9 +88,7 @@ export class StudentDisplay {
               <p>Modified by: <span class="grey-text">{student.modifiedby}</span></p>
               <p>ID: <span class="grey-text">{student.sid}</span></p>
               <div class="button-container">
-                {!this.editing &&
-                  <ion-button disabled={this.editing} onClick={() => this.editClickHandler()}>Edit</ion-button>
-                }
+                <ion-button disabled={this.editing} onClick={() => this.editClickHandler()}>Edit</ion-button>
               </div>
             </div>
             <div>
@@ -152,7 +147,7 @@ export class StudentDisplay {
           </div>
           <div class="button-container">
             {this.editing && [
-              <ion-button style={{ '--background': '#10dc60' }} disabled={!this.editing} onClick={() => this.saveClickHandler()}>Save</ion-button>,
+              <ion-button style={{ '--background': '#10dc60' }} disabled={!this.editing} onClick={() => this.updateClickHandler()}>Save</ion-button>,
               <ion-button style={{ '--background': '#f04141' }} disabled={!this.editing} onClick={() => this.deleteClickHandler()}>Delete</ion-button>]
             }
           </div>
