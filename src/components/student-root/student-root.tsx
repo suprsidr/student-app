@@ -45,11 +45,12 @@ export class StudentRoot {
 
   @Listen('changeEvent')
   changeEventHandler(event: CustomEvent) {
+    this.students = [];
     console.log('Received the custom changeEvent event: ', event.detail);
     this.worker.postMessage(event.detail);
   }
 
-  componentDidLoad(): void {
+  componentWillLoad(): void {
     this.worker.onmessage = ({ data }) => {
       console.log(data.students.length);
       this.students = data.students;
@@ -66,14 +67,28 @@ export class StudentRoot {
   render() {
     return (
       <ion-content class="ion-padding">
-        <ion-searchbar animated debounce={1500} onIonChange={(e) => this.handleSelectChange(e)}></ion-searchbar>
-        {this.students.length === 0 &&
-          <div class="text-center">
-            <p>&nbsp;</p>
-            <ion-spinner name="bubbles"></ion-spinner>
-          </div>
-        }
-        <student-list students={this.students}></student-list>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-searchbar animated debounce={1500} onIonChange={(e) => this.handleSelectChange(e)}></ion-searchbar>
+            </ion-col>
+          </ion-row>
+          {this.students.length === 0 &&
+          <ion-row>
+            <ion-col>
+              <ion-spinner name="bubbles"></ion-spinner>
+            </ion-col>
+          </ion-row>}
+          <ion-row>
+            <ion-col>
+              <ion-scroll scrollY={true}>
+                <ion-list>
+                  <student-list students={this.students}></student-list>
+                </ion-list>
+              </ion-scroll>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-content>
     );
   }

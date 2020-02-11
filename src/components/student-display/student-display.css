@@ -2,12 +2,16 @@
   display: block;
 }
 
-.student-container {
+.content {
+  padding-bottom: .75rem
+}
+
+/* .student-container {
   width: 200%;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 20px;
-}
+} */
 
 .student-container p {
   font-size: 1.2em !important;

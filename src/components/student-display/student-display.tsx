@@ -14,10 +14,6 @@ export class StudentDisplay {
 
   @State() tmpStudent: any;
 
-  studentContainer!: HTMLElement;
-
-  editContainer!: HTMLFormElement;
-
   @Event({
     eventName: 'changeEvent',
     composed: true,
@@ -26,24 +22,20 @@ export class StudentDisplay {
   }) changeEvent: EventEmitter;
 
   componentWillLoad(): void {
-    // console.log('componentWillLoad', this.student);
     this.tmpStudent = Object.assign({}, this.student);
   }
 
   editClickHandler() {
     this.editing = !this.editing;
-    this.studentContainer.classList.toggle('open');
   }
 
   updateClickHandler() {
     this.editing = !this.editing;
-    this.studentContainer.classList.toggle('open');
     this.changeEvent.emit({ action: 'updateStudent', args: { student: this.tmpStudent }});
   }
 
   deleteClickHandler() {
     this.editing = !this.editing;
-    this.studentContainer.classList.toggle('open');
     this.changeEvent.emit({ action: 'deleteStudent', args: { student: this.tmpStudent } });
   }
 
@@ -67,14 +59,13 @@ export class StudentDisplay {
     )
     return (
       <ion-card>
-        {!this.editing &&
-          <ion-card-header>
-            <img class="student-image-large" src={`${student.picture.large}`} alt={`${student.name.last} ${student.name.first}`} />
-            <ion-card-title>{`${student.name.first} ${student.name.last}`}</ion-card-title>
-          </ion-card-header>
-        }
-        <ion-card-content>
-          <div class="student-container" ref={(el) => this.studentContainer = el as HTMLElement}>
+        <header>
+          <ion-img class="student-image-large" src={`${student.picture.large}`} alt={`${student.name.last} ${student.name.first}`} />
+          <h2>{`${student.name.first} ${student.name.last}`}</h2>
+        </header>
+        <div class="content">
+          <div class="student-container">
+          {!this.editing &&
             <div>
               <p>{student.location.street}<br />{student.location.city}, {student.location.state} {student.location.postcode}</p>
               <p>Phone: {student.phone} <br class="show-for-small-only" /> Cell: {student.cell}</p>
@@ -83,7 +74,6 @@ export class StudentDisplay {
               <p>GPA: {student.gpa}</p>
               <p>DOB: {`${new Date(student.dob).toLocaleDateString()}`}</p>
               <p>{`Registered: ${new Date(student.registered).toLocaleDateString()}`}</p>
-              <p>&nbsp;</p>
               <p>Last updated: <span class="grey-text">{new Date(student.modified).toUTCString()}</span></p>
               <p>Modified by: <span class="grey-text">{student.modifiedby}</span></p>
               <p>ID: <span class="grey-text">{student.sid}</span></p>
@@ -91,8 +81,10 @@ export class StudentDisplay {
                 <ion-button disabled={this.editing} onClick={() => this.editClickHandler()}>Edit</ion-button>
               </div>
             </div>
+          }
+          {this.editing &&
             <div>
-              <form ref={(el) => this.editContainer = el as HTMLFormElement}>
+              <form>
                 <ion-item>
                   <ion-label>First Name: </ion-label>
                   <ion-input id="name.first" debounce={300} onIonChange={(e) => this.handleChange(e)} value={student.name.first}></ion-input>
@@ -144,14 +136,16 @@ export class StudentDisplay {
                 <input id="sid" type="hidden" value={student.sid} />
               </form>
             </div>
+          }
           </div>
           <div class="button-container">
             {this.editing && [
+              <ion-button onClick={() => this.editClickHandler()}>Cancel</ion-button>,
               <ion-button style={{ '--background': '#10dc60' }} disabled={!this.editing} onClick={() => this.updateClickHandler()}>Save</ion-button>,
               <ion-button style={{ '--background': '#f04141' }} disabled={!this.editing} onClick={() => this.deleteClickHandler()}>Delete</ion-button>]
             }
           </div>
-        </ion-card-content>
+        </div>
       </ion-card>
     )
   }
