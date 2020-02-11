@@ -24,7 +24,7 @@ function fetchData() {
         }
         return stu;
       });
-      filterStudents('A');
+      filterStudents('Annie Gregory');
     })
 }
 

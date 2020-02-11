@@ -50,6 +50,7 @@ export class StudentRoot {
 
   componentDidLoad(): void {
     this.worker.onmessage = ({ data }) => {
+      console.log(this.students.length);
       this.students = data.students;
     };
     this.worker.postMessage({ action: 'fetchData', args: {} });

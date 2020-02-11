@@ -2,18 +2,20 @@
   display: block;
 }
 
-/* .ion-color-primary-gradient {
-  --ion-color-base: linear-gradient(
-      to bottom,
-      var(--ion-color-primary) 0%,
-      var(--ion-color-primary-contrast) 100%
-    );
-  --ion-color-base-rgb: 56, 128, 255;
-  --ion-color-contrast: #ffffff;
-  --ion-color-contrast-rgb: 255, 255, 255;
-  --ion-color-shade: #3171e0;
-  --ion-color-tint: #4c8dff;
-} */
+.student-container {
+  width: 200%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+}
+
+.student-container p {
+  font-size: 1.2em !important;
+}
+
+.student-container.open {
+  transform: translateX(-50%);
+}
 
 :root {
   --ion-color-primary: #3880ff;
