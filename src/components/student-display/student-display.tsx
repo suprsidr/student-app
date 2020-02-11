@@ -60,7 +60,11 @@ export class StudentDisplay {
     return (
       <ion-card>
         <header>
-          <ion-img class="student-image-large" src={`${student.picture.large}`} alt={`${student.name.last} ${student.name.first}`} />
+          <div class="avatar-container">
+            <ion-avatar>
+              <ion-img class="student-image-large" src={`${student.picture.large}`} alt={`${student.name.last} ${student.name.first}`}></ion-img>
+            </ion-avatar>
+          </div>
           <h2>{`${student.name.first} ${student.name.last}`}</h2>
         </header>
         <div class="content">

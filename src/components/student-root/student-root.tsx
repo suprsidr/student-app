@@ -41,11 +41,14 @@ export class StudentRoot {
 
   @State() students: Student[] = [];
 
+  @State() failedSearch: boolean = false;
+
   worker: Worker = new Worker('/assets/js/dedicated-worker.js');
 
   @Listen('changeEvent')
   changeEventHandler(event: CustomEvent) {
     this.students = [];
+    this.failedSearch = false;
     console.log('Received the custom changeEvent event: ', event.detail);
     this.worker.postMessage(event.detail);
   }
@@ -53,6 +56,7 @@ export class StudentRoot {
   componentWillLoad(): void {
     this.worker.onmessage = ({ data }) => {
       console.log(data.students.length);
+      if (data.students.length === 0) this.failedSearch = true;
       this.students = data.students;
     };
     this.worker.postMessage({ action: 'fetchStudents', args: {} });
@@ -61,6 +65,7 @@ export class StudentRoot {
   handleSelectChange({ target }): void {
     this.students = [];
     const filter = (target.value || 'A').split(' ').map(part => `${part.charAt(0).toUpperCase()}${part.slice(1)}`).join(' ');
+    this.failedSearch = false;
     this.worker.postMessage({ action: 'filterStudents', args: { filter } });
   }
 
@@ -73,12 +78,18 @@ export class StudentRoot {
               <ion-searchbar animated debounce={1500} onIonChange={(e) => this.handleSelectChange(e)}></ion-searchbar>
             </ion-col>
           </ion-row>
-          {this.students.length === 0 &&
+          {(this.students.length === 0 && !this.failedSearch) &&
           <ion-row>
-            <ion-col>
+            <ion-col class="text-center">
               <ion-spinner name="bubbles"></ion-spinner>
             </ion-col>
           </ion-row>}
+          {(this.students.length === 0 && this.failedSearch) &&
+            <ion-row>
+            <ion-col class="text-center">
+                <h4>Sorry, No Results!</h4>
+              </ion-col>
+            </ion-row>}
           <ion-row>
             <ion-col>
               <ion-scroll scrollY={true}>
