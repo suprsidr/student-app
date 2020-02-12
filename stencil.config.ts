@@ -5,7 +5,12 @@ import { Config } from '@stencil/core';
 export const config: Config = {
   outputTargets: [{
     type: 'www',
-    serviceWorker: null
+    serviceWorker: {
+      globPatterns: [
+        // '**/*.{js,css,json,html,ico,png}',
+        '**/*.{jpg,ico,png}'
+      ]
+    }
   }],
   globalScript: 'src/global/app.ts',
   globalStyle: 'src/global/app.css'
