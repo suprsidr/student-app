@@ -21,6 +21,10 @@ export class StudentDisplay {
     bubbles: true,
   }) changeEvent: EventEmitter;
 
+  popoverController!: any;
+
+  currentPopover!: any;
+
   componentWillLoad(): void {
     this.tmpStudent = Object.assign({}, this.student);
   }
@@ -49,6 +53,21 @@ export class StudentDisplay {
     }
   }
 
+  async handleButtonClick() {
+    let popover = await this.popoverController.create({
+      component: 'popover-menu',
+      componentProps: { dismissFunc: this.dismissPopover.bind(this) }
+    });
+    this.currentPopover = popover;
+    return popover.present();
+  }
+
+  dismissPopover() {
+    if (this.currentPopover) {
+      this.currentPopover.dismiss().then(() => { this.currentPopover = null; });
+    }
+  }
+
   render() {
     const student = this.tmpStudent;
     if(!student) return (
@@ -60,8 +79,10 @@ export class StudentDisplay {
     return (
       <ion-card>
         <header>
+          <button onClick={() => this.handleButtonClick()}>Click</button>
           <student-img class="student-image-large" src={`${student.picture.large}`} alt={`${student.name.first} ${student.name.last}`}></student-img>
           <h2>{`${student.name.first} ${student.name.last}`}</h2>
+          <ion-popover-controller ref={(el) => this.popoverController = el as HTMLElement}></ion-popover-controller>
         </header>
         <div class="content">
           <div class="student-container">

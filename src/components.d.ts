@@ -12,6 +12,9 @@ import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 export namespace Components {
   interface AppHome {}
   interface AppRoot {}
+  interface PopoverMenu {
+    'dismissFunc': Function;
+  }
   interface StudentDisplay {
     'student': any;
   }
@@ -47,6 +50,12 @@ declare global {
     new (): HTMLAppRootElement;
   };
 
+  interface HTMLPopoverMenuElement extends Components.PopoverMenu, HTMLStencilElement {}
+  var HTMLPopoverMenuElement: {
+    prototype: HTMLPopoverMenuElement;
+    new (): HTMLPopoverMenuElement;
+  };
+
   interface HTMLStudentDisplayElement extends Components.StudentDisplay, HTMLStencilElement {}
   var HTMLStudentDisplayElement: {
     prototype: HTMLStudentDisplayElement;
@@ -73,6 +82,7 @@ declare global {
   interface HTMLElementTagNameMap {
     'app-home': HTMLAppHomeElement;
     'app-root': HTMLAppRootElement;
+    'popover-menu': HTMLPopoverMenuElement;
     'student-display': HTMLStudentDisplayElement;
     'student-img': HTMLStudentImgElement;
     'student-list': HTMLStudentListElement;
@@ -83,6 +93,9 @@ declare global {
 declare namespace LocalJSX {
   interface AppHome {}
   interface AppRoot {}
+  interface PopoverMenu {
+    'dismissFunc'?: Function;
+  }
   interface StudentDisplay {
     'onChangeEvent'?: (event: CustomEvent<any>) => void;
     'student'?: any;
@@ -118,6 +131,7 @@ declare namespace LocalJSX {
   interface IntrinsicElements {
     'app-home': AppHome;
     'app-root': AppRoot;
+    'popover-menu': PopoverMenu;
     'student-display': StudentDisplay;
     'student-img': StudentImg;
     'student-list': StudentList;
@@ -133,6 +147,7 @@ declare module "@stencil/core" {
     interface IntrinsicElements {
       'app-home': LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
       'app-root': LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
+      'popover-menu': LocalJSX.PopoverMenu & JSXBase.HTMLAttributes<HTMLPopoverMenuElement>;
       'student-display': LocalJSX.StudentDisplay & JSXBase.HTMLAttributes<HTMLStudentDisplayElement>;
       'student-img': LocalJSX.StudentImg & JSXBase.HTMLAttributes<HTMLStudentImgElement>;
       'student-list': LocalJSX.StudentList & JSXBase.HTMLAttributes<HTMLStudentListElement>;
