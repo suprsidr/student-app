@@ -15,6 +15,17 @@ export namespace Components {
   interface StudentDisplay {
     'student': any;
   }
+  interface StudentImg {
+    /**
+    * This attribute defines the alternative text describing the image. Users will see this text displayed if the image URL is wrong, the image is not in one of the supported formats, or if the image is not yet downloaded.
+    */
+    'alt'?: string;
+    'class'?: string;
+    /**
+    * The image URL. This attribute is mandatory for the `<img>` element.
+    */
+    'src'?: string;
+  }
   interface StudentList {
     'students': any;
   }
@@ -42,6 +53,12 @@ declare global {
     new (): HTMLStudentDisplayElement;
   };
 
+  interface HTMLStudentImgElement extends Components.StudentImg, HTMLStencilElement {}
+  var HTMLStudentImgElement: {
+    prototype: HTMLStudentImgElement;
+    new (): HTMLStudentImgElement;
+  };
+
   interface HTMLStudentListElement extends Components.StudentList, HTMLStencilElement {}
   var HTMLStudentListElement: {
     prototype: HTMLStudentListElement;
@@ -57,6 +74,7 @@ declare global {
     'app-home': HTMLAppHomeElement;
     'app-root': HTMLAppRootElement;
     'student-display': HTMLStudentDisplayElement;
+    'student-img': HTMLStudentImgElement;
     'student-list': HTMLStudentListElement;
     'student-root': HTMLStudentRootElement;
   }
@@ -69,6 +87,29 @@ declare namespace LocalJSX {
     'onChangeEvent'?: (event: CustomEvent<any>) => void;
     'student'?: any;
   }
+  interface StudentImg {
+    /**
+    * This attribute defines the alternative text describing the image. Users will see this text displayed if the image URL is wrong, the image is not in one of the supported formats, or if the image is not yet downloaded.
+    */
+    'alt'?: string;
+    'class'?: string;
+    /**
+    * Emitted when the img fails to load
+    */
+    'onIonError'?: (event: CustomEvent<void>) => void;
+    /**
+    * Emitted when the image has finished loading
+    */
+    'onIonImgDidLoad'?: (event: CustomEvent<void>) => void;
+    /**
+    * Emitted when the img src has been set
+    */
+    'onIonImgWillLoad'?: (event: CustomEvent<void>) => void;
+    /**
+    * The image URL. This attribute is mandatory for the `<img>` element.
+    */
+    'src'?: string;
+  }
   interface StudentList {
     'students'?: any;
   }
@@ -78,6 +119,7 @@ declare namespace LocalJSX {
     'app-home': AppHome;
     'app-root': AppRoot;
     'student-display': StudentDisplay;
+    'student-img': StudentImg;
     'student-list': StudentList;
     'student-root': StudentRoot;
   }
@@ -92,6 +134,7 @@ declare module "@stencil/core" {
       'app-home': LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
       'app-root': LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
       'student-display': LocalJSX.StudentDisplay & JSXBase.HTMLAttributes<HTMLStudentDisplayElement>;
+      'student-img': LocalJSX.StudentImg & JSXBase.HTMLAttributes<HTMLStudentImgElement>;
       'student-list': LocalJSX.StudentList & JSXBase.HTMLAttributes<HTMLStudentListElement>;
       'student-root': LocalJSX.StudentRoot & JSXBase.HTMLAttributes<HTMLStudentRootElement>;
     }

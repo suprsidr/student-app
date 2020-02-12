@@ -28,3 +28,20 @@
   display: inline-block;
   margin: .75em auto
 }
+[class^="student-image-"] {
+  border-radius: 50%;
+}
+.student-image-large {
+  border: .5rem solid #fff;
+  max-width: 144px;
+  height: auto;
+  margin: 0 auto;
+}
+.student-image-small {
+  max-width: 48px;
+  height: auto;
+  margin-right: .5rem;
+}
+.text-center {
+  text-align: center
+}
