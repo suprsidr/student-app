@@ -1,5 +1,37 @@
 import { Component, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 
+// type Name = {
+//   first: string,
+//   last: string
+// }
+
+// type Picture = {
+//   large: string
+// }
+
+// type Location = {
+//   street: string,
+//   city: string,
+//   state: string,
+//   postcode: string
+// }
+
+// type Student = {
+//   name: Name,
+//   dob: string,
+//   picture: Picture,
+//   location: Location,
+//   phone: string,
+//   cell: string,
+//   email: string,
+//   registered: number,
+//   major: string,
+//   gpa: string,
+//   sid: string,
+//   modified: number,
+//   modifiedby: string
+// }
+
 @Component({
   tag: 'student-display',
   styleUrl: 'student-display.css',
@@ -9,6 +41,8 @@ import { Component, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 export class StudentDisplay {
 
   @Prop() student: any;
+
+  @Prop() dismissFunc: Function;
 
   @State() editing: boolean = false;
 
@@ -20,10 +54,6 @@ export class StudentDisplay {
     cancelable: true,
     bubbles: true,
   }) changeEvent: EventEmitter;
-
-  popoverController!: any;
-
-  currentPopover!: any;
 
   componentWillLoad(): void {
     this.tmpStudent = Object.assign({}, this.student);
@@ -53,21 +83,6 @@ export class StudentDisplay {
     }
   }
 
-  async handleButtonClick() {
-    let popover = await this.popoverController.create({
-      component: 'popover-menu',
-      componentProps: { dismissFunc: this.dismissPopover.bind(this) }
-    });
-    this.currentPopover = popover;
-    return popover.present();
-  }
-
-  dismissPopover() {
-    if (this.currentPopover) {
-      this.currentPopover.dismiss().then(() => { this.currentPopover = null; });
-    }
-  }
-
   render() {
     const student = this.tmpStudent;
     if(!student) return (
@@ -78,14 +93,12 @@ export class StudentDisplay {
     )
     return (
       <ion-card>
-        <header>
-          <button onClick={() => this.handleButtonClick()}>Click</button>
+        <header class="text-center">
           <student-img cssClass="student-image-large" src={`${student.picture.large}`} alt={`${student.name.first} ${student.name.last}`}></student-img>
           <h2>{`${student.name.first} ${student.name.last}`}</h2>
-          <ion-popover-controller ref={(el) => this.popoverController = el as HTMLElement}></ion-popover-controller>
         </header>
         <div class="content">
-          <div class="student-container">
+          <div class="student-container text-center">
           {!this.editing &&
             <div>
               <p>{student.location.street}<br />{student.location.city}, {student.location.state} {student.location.postcode}</p>
@@ -99,7 +112,8 @@ export class StudentDisplay {
               <p>Modified by: <span class="grey-text">{student.modifiedby}</span></p>
               <p>ID: <span class="grey-text">{student.sid}</span></p>
               <div class="button-container">
-                <ion-button disabled={this.editing} onClick={() => this.editClickHandler()}>Edit</ion-button>
+                <ion-button onClick={() => this.editClickHandler()}>Edit</ion-button>
+                <ion-button onClick={() => this.dismissFunc()}>Close</ion-button>
               </div>
             </div>
           }
@@ -159,13 +173,14 @@ export class StudentDisplay {
             </div>
           }
           </div>
-          <div class="button-container">
+          <div class="button-container text-center">
             {this.editing && [
               <ion-button onClick={() => this.editClickHandler()}>Cancel</ion-button>,
               <ion-button style={{ '--background': '#10dc60' }} disabled={!this.editing} onClick={() => this.updateClickHandler()}>Save</ion-button>,
               <ion-button style={{ '--background': '#f04141' }} disabled={!this.editing} onClick={() => this.deleteClickHandler()}>Delete</ion-button>]
             }
           </div>
+          <p>&nbsp;</p>
         </div>
       </ion-card>
     )

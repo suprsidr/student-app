@@ -1,0 +1,7 @@
+:host {
+  display: block;
+}
+
+.pop-student {
+  --width: 100%;
+}

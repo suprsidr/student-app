@@ -7,7 +7,9 @@ import { Component, Prop, h } from '@stencil/core';
 })
 
 export class PopoverMenu {
+
   @Prop() dismissFunc: Function;
+
   render() {
     return [
       <ion-list>

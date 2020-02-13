@@ -16,6 +16,7 @@ export namespace Components {
     'dismissFunc': Function;
   }
   interface StudentDisplay {
+    'dismissFunc': Function;
     'student': any;
   }
   interface StudentImg {
@@ -31,6 +32,9 @@ export namespace Components {
   }
   interface StudentList {
     'students': any;
+  }
+  interface StudentListItem {
+    'student': any;
   }
   interface StudentRoot {}
 }
@@ -74,6 +78,12 @@ declare global {
     new (): HTMLStudentListElement;
   };
 
+  interface HTMLStudentListItemElement extends Components.StudentListItem, HTMLStencilElement {}
+  var HTMLStudentListItemElement: {
+    prototype: HTMLStudentListItemElement;
+    new (): HTMLStudentListItemElement;
+  };
+
   interface HTMLStudentRootElement extends Components.StudentRoot, HTMLStencilElement {}
   var HTMLStudentRootElement: {
     prototype: HTMLStudentRootElement;
@@ -86,6 +96,7 @@ declare global {
     'student-display': HTMLStudentDisplayElement;
     'student-img': HTMLStudentImgElement;
     'student-list': HTMLStudentListElement;
+    'student-list-item': HTMLStudentListItemElement;
     'student-root': HTMLStudentRootElement;
   }
 }
@@ -97,6 +108,7 @@ declare namespace LocalJSX {
     'dismissFunc'?: Function;
   }
   interface StudentDisplay {
+    'dismissFunc'?: Function;
     'onChangeEvent'?: (event: CustomEvent<any>) => void;
     'student'?: any;
   }
@@ -126,6 +138,9 @@ declare namespace LocalJSX {
   interface StudentList {
     'students'?: any;
   }
+  interface StudentListItem {
+    'student'?: any;
+  }
   interface StudentRoot {}
 
   interface IntrinsicElements {
@@ -135,6 +150,7 @@ declare namespace LocalJSX {
     'student-display': StudentDisplay;
     'student-img': StudentImg;
     'student-list': StudentList;
+    'student-list-item': StudentListItem;
     'student-root': StudentRoot;
   }
 }
@@ -151,6 +167,7 @@ declare module "@stencil/core" {
       'student-display': LocalJSX.StudentDisplay & JSXBase.HTMLAttributes<HTMLStudentDisplayElement>;
       'student-img': LocalJSX.StudentImg & JSXBase.HTMLAttributes<HTMLStudentImgElement>;
       'student-list': LocalJSX.StudentList & JSXBase.HTMLAttributes<HTMLStudentListElement>;
+      'student-list-item': LocalJSX.StudentListItem & JSXBase.HTMLAttributes<HTMLStudentListItemElement>;
       'student-root': LocalJSX.StudentRoot & JSXBase.HTMLAttributes<HTMLStudentRootElement>;
     }
   }
