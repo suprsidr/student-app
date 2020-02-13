@@ -22,7 +22,7 @@ export class Img implements ComponentInterface {
    */
   @Prop() alt?: string;
 
-  @Prop() class?: string;
+  @Prop() cssClass?: string;
 
   /**
    * The image URL. This attribute is mandatory for the `<img>` element.
@@ -100,7 +100,7 @@ export class Img implements ComponentInterface {
         <img
           decoding="async"
           src={this.loadSrc}
-          class={this.class}
+          class={this.cssClass}
           alt={this.alt}
           onLoad={this.onLoad}
           onError={this.loadError}

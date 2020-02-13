@@ -80,7 +80,7 @@ export class StudentDisplay {
       <ion-card>
         <header>
           <button onClick={() => this.handleButtonClick()}>Click</button>
-          <student-img class="student-image-large" src={`${student.picture.large}`} alt={`${student.name.first} ${student.name.last}`}></student-img>
+          <student-img cssClass="student-image-large" src={`${student.picture.large}`} alt={`${student.name.first} ${student.name.last}`}></student-img>
           <h2>{`${student.name.first} ${student.name.last}`}</h2>
           <ion-popover-controller ref={(el) => this.popoverController = el as HTMLElement}></ion-popover-controller>
         </header>

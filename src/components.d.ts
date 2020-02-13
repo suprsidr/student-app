@@ -23,7 +23,7 @@ export namespace Components {
     * This attribute defines the alternative text describing the image. Users will see this text displayed if the image URL is wrong, the image is not in one of the supported formats, or if the image is not yet downloaded.
     */
     'alt'?: string;
-    'class'?: string;
+    'cssClass'?: string;
     /**
     * The image URL. This attribute is mandatory for the `<img>` element.
     */
@@ -105,7 +105,7 @@ declare namespace LocalJSX {
     * This attribute defines the alternative text describing the image. Users will see this text displayed if the image URL is wrong, the image is not in one of the supported formats, or if the image is not yet downloaded.
     */
     'alt'?: string;
-    'class'?: string;
+    'cssClass'?: string;
     /**
     * Emitted when the img fails to load
     */
