@@ -1,37 +1,5 @@
 import { Component, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 
-// type Name = {
-//   first: string,
-//   last: string
-// }
-
-// type Picture = {
-//   large: string
-// }
-
-// type Location = {
-//   street: string,
-//   city: string,
-//   state: string,
-//   postcode: string
-// }
-
-// type Student = {
-//   name: Name,
-//   dob: string,
-//   picture: Picture,
-//   location: Location,
-//   phone: string,
-//   cell: string,
-//   email: string,
-//   registered: number,
-//   major: string,
-//   gpa: string,
-//   sid: string,
-//   modified: number,
-//   modifiedby: string
-// }
-
 @Component({
   tag: 'student-display',
   styleUrl: 'student-display.css',

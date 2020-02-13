@@ -1,37 +1,4 @@
 import { Component, h, Prop, State } from '@stencil/core';
-// import { StudentDisplay } from '../student-display/student-display';
-
-// type Name = {
-//   first: string,
-//   last: string
-// }
-
-// type Picture = {
-//   large: string
-// }
-
-// type Location = {
-//   street: string,
-//   city: string,
-//   state: string,
-//   postcode: string
-// }
-
-// type Student = {
-//   name: Name,
-//   dob: string,
-//   picture: Picture,
-//   location: Location,
-//   phone: string,
-//   cell: string,
-//   email: string,
-//   registered: number,
-//   major: string,
-//   gpa: string,
-//   sid: string,
-//   modified: number,
-//   modifiedby: string
-// }
 
 @Component({
   tag: 'student-list',
@@ -51,6 +18,7 @@ export class StudentList {
     this.appendItems();
   }
 
+  // TODO test for end of data
   async appendItems() {
     if (this.studentList.length < this.students.length) {
       console.log('Loading data...');
