@@ -41,9 +41,9 @@ import { Component, h, Prop, State } from '@stencil/core';
 
 export class StudentList {
 
-  @Prop() students: any = [];
+  @Prop() students: Array<IStudent> = [];
 
-  @State() studentList: any = [];
+  @State() studentList: Array<IStudent> = [];
 
   infiniteScroll: any;
 
@@ -78,7 +78,7 @@ export class StudentList {
   render() {
     return [
       <div class="main">
-        <ion-list>
+        <ion-list class="ion-padding">
           {this.studentList
             .map(student => (
               <student-list-item student={student}></student-list-item>

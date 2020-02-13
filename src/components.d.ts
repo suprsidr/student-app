@@ -12,12 +12,9 @@ import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 export namespace Components {
   interface AppHome {}
   interface AppRoot {}
-  interface PopoverMenu {
-    'dismissFunc': Function;
-  }
   interface StudentDisplay {
     'dismissFunc': Function;
-    'student': any;
+    'student': IStudent;
   }
   interface StudentImg {
     /**
@@ -31,10 +28,10 @@ export namespace Components {
     'src'?: string;
   }
   interface StudentList {
-    'students': any;
+    'students': Array<IStudent>;
   }
   interface StudentListItem {
-    'student': any;
+    'student': IStudent;
   }
   interface StudentRoot {}
 }
@@ -52,12 +49,6 @@ declare global {
   var HTMLAppRootElement: {
     prototype: HTMLAppRootElement;
     new (): HTMLAppRootElement;
-  };
-
-  interface HTMLPopoverMenuElement extends Components.PopoverMenu, HTMLStencilElement {}
-  var HTMLPopoverMenuElement: {
-    prototype: HTMLPopoverMenuElement;
-    new (): HTMLPopoverMenuElement;
   };
 
   interface HTMLStudentDisplayElement extends Components.StudentDisplay, HTMLStencilElement {}
@@ -92,7 +83,6 @@ declare global {
   interface HTMLElementTagNameMap {
     'app-home': HTMLAppHomeElement;
     'app-root': HTMLAppRootElement;
-    'popover-menu': HTMLPopoverMenuElement;
     'student-display': HTMLStudentDisplayElement;
     'student-img': HTMLStudentImgElement;
     'student-list': HTMLStudentListElement;
@@ -104,13 +94,10 @@ declare global {
 declare namespace LocalJSX {
   interface AppHome {}
   interface AppRoot {}
-  interface PopoverMenu {
-    'dismissFunc'?: Function;
-  }
   interface StudentDisplay {
     'dismissFunc'?: Function;
     'onChangeEvent'?: (event: CustomEvent<any>) => void;
-    'student'?: any;
+    'student'?: IStudent;
   }
   interface StudentImg {
     /**
@@ -136,17 +123,16 @@ declare namespace LocalJSX {
     'src'?: string;
   }
   interface StudentList {
-    'students'?: any;
+    'students'?: Array<IStudent>;
   }
   interface StudentListItem {
-    'student'?: any;
+    'student'?: IStudent;
   }
   interface StudentRoot {}
 
   interface IntrinsicElements {
     'app-home': AppHome;
     'app-root': AppRoot;
-    'popover-menu': PopoverMenu;
     'student-display': StudentDisplay;
     'student-img': StudentImg;
     'student-list': StudentList;
@@ -163,7 +149,6 @@ declare module "@stencil/core" {
     interface IntrinsicElements {
       'app-home': LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
       'app-root': LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
-      'popover-menu': LocalJSX.PopoverMenu & JSXBase.HTMLAttributes<HTMLPopoverMenuElement>;
       'student-display': LocalJSX.StudentDisplay & JSXBase.HTMLAttributes<HTMLStudentDisplayElement>;
       'student-img': LocalJSX.StudentImg & JSXBase.HTMLAttributes<HTMLStudentImgElement>;
       'student-list': LocalJSX.StudentList & JSXBase.HTMLAttributes<HTMLStudentListElement>;

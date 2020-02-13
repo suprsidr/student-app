@@ -7,7 +7,7 @@ import { Component, Prop, h } from '@stencil/core';
 })
 export class StudentListItem {
 
-  @Prop() student: any;
+  @Prop() student: IStudent;
 
   popoverController!: any;
 

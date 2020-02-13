@@ -40,13 +40,13 @@ import { Component, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 
 export class StudentDisplay {
 
-  @Prop() student: any;
+  @Prop() student: IStudent;
 
   @Prop() dismissFunc: Function;
 
   @State() editing: boolean = false;
 
-  @State() tmpStudent: any;
+  @State() tmpStudent: IStudent;
 
   @Event({
     eventName: 'changeEvent',
@@ -92,7 +92,7 @@ export class StudentDisplay {
       </div>
     )
     return (
-      <ion-card>
+      <div>
         <header class="text-center">
           <student-img cssClass="student-image-large" src={`${student.picture.large}`} alt={`${student.name.first} ${student.name.last}`}></student-img>
           <h2>{`${student.name.first} ${student.name.last}`}</h2>
@@ -110,7 +110,7 @@ export class StudentDisplay {
               <p>{`Registered: ${new Date(student.registered).toLocaleDateString()}`}</p>
               <p>Last updated: <span class="grey-text">{new Date(student.modified).toUTCString()}</span></p>
               <p>Modified by: <span class="grey-text">{student.modifiedby}</span></p>
-              <p>ID: <span class="grey-text">{student.sid}</span></p>
+              {/* <p>ID: <span class="grey-text">{student.sid}</span></p> */}
               <div class="button-container">
                 <ion-button onClick={() => this.editClickHandler()}>Edit</ion-button>
                 <ion-button onClick={() => this.dismissFunc()}>Close</ion-button>
@@ -180,9 +180,8 @@ export class StudentDisplay {
               <ion-button style={{ '--background': '#f04141' }} disabled={!this.editing} onClick={() => this.deleteClickHandler()}>Delete</ion-button>]
             }
           </div>
-          <p>&nbsp;</p>
         </div>
-      </ion-card>
+      </div>
     )
   }
 };

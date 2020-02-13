@@ -39,7 +39,7 @@ import { Component, State, h, Listen } from '@stencil/core';
 })
 export class StudentRoot {
 
-  @State() students: any = [];
+  @State() students: Array<IStudent> = [];
 
   @State() failedSearch: boolean = false;
 
@@ -62,7 +62,7 @@ export class StudentRoot {
     this.worker.postMessage({ action: 'fetchStudents', args: {} });
   }
 
-  handleSelectChange({ target }): void {
+  handleSearchChange({ target }): void {
     this.students = [];
     const filter = (target.value || 'A').split(' ').map(part => `${part.charAt(0).toUpperCase()}${part.slice(1)}`).join(' ');
     this.failedSearch = false;
@@ -75,7 +75,7 @@ export class StudentRoot {
         <ion-grid>
           <ion-row>
             <ion-col>
-              <ion-searchbar animated debounce={1500} onIonChange={(e) => this.handleSelectChange(e)}></ion-searchbar>
+              <ion-searchbar animated debounce={1500} onIonChange={(e) => this.handleSearchChange(e)}></ion-searchbar>
             </ion-col>
           </ion-row>
           {(this.students.length === 0 && !this.failedSearch) &&
@@ -92,11 +92,7 @@ export class StudentRoot {
             </ion-row>}
           <ion-row>
             <ion-col>
-              <ion-scroll scrollY={true}>
-                <ion-list>
-                  <student-list students={this.students}></student-list>
-                </ion-list>
-              </ion-scroll>
+              <student-list students={this.students}></student-list>
             </ion-col>
           </ion-row>
         </ion-grid>
