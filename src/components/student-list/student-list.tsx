@@ -18,6 +18,10 @@ export class StudentList {
     this.appendItems();
   }
 
+  componentWillUpdate(args) {
+    console.log('component updated', args)
+  }
+
   // TODO test for end of data
   async appendItems() {
     if (this.studentList.length < this.students.length) {

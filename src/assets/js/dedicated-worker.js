@@ -1,5 +1,6 @@
 let students = [];
 let previousSearch = 'A';
+const API_URL = 'https://suprsidr.com/students';
 
 self.onmessage = ({ data }) => {
   switch (data.action) {
@@ -28,6 +29,14 @@ function deleteStudent(student) {
   students = students.filter(stu => stu.sid !== student.sid);
   filterStudents(previousSearch);
   // make call to api to actually remove
+  fetch(`${API_URL}/delete/${JSON.stringify({ sid: student.sid })}`, {
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }).then(res => console.log(res));
 }
 
 // New student
@@ -35,9 +44,20 @@ function saveStudent(student) {
   students.push(student);
   filterStudents(previousSearch);
   // make call to api to actually save
+  fetch(`${API_URL}/insert/${JSON.stringify({ admin: 'Stencil App', student })}`, {
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    // credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }).then(res => console.log(res));
 }
 
 function updateStudent(student) {
+  const original = Object.assign({}, student);
+  // optomistic update
   students = students.map((stu) => {
     if (stu.sid === student.sid) {
       return Object.assign(stu, student);
@@ -46,10 +66,29 @@ function updateStudent(student) {
   })
   filterStudents(previousSearch);
   // make call to api to actually update
+  fetch(`${API_URL}/update/${JSON.stringify({ admin: 'Stencil App', student })}`, {
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    // credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }).then(res => console.log(res))
+    .catch(err => {
+      // roll back
+      students = students.map((stu) => {
+        if (stu.sid === original.sid) {
+          return Object.assign(stu, original);
+        }
+        return stu;
+      })
+      filterStudents(previousSearch);
+    });
 }
 
 function fetchStudents() {
-  fetch('https://suprsidr.com/students/%7B%7D/0/%7B%7D/%7B%22_id%22:0%7D')
+  fetch(`${API_URL}/%7B%7D/0/%7B%7D/%7B%22_id%22:0%7D`)
     .then(resp => resp.json())
     .then((data) => {
       students = data.map(stu => {

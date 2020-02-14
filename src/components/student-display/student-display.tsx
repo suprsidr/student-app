@@ -1,4 +1,4 @@
-import { Component, h, Prop, State, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Prop, State } from '@stencil/core';
 
 @Component({
   tag: 'student-display',
@@ -12,16 +12,11 @@ export class StudentDisplay {
 
   @Prop() dismissFunc: Function;
 
+  @Prop() emitterFunc: Function;
+
   @State() editing: boolean = false;
 
   @State() tmpStudent: IStudent;
-
-  @Event({
-    eventName: 'changeEvent',
-    composed: true,
-    cancelable: true,
-    bubbles: true,
-  }) changeEvent: EventEmitter;
 
   componentWillLoad(): void {
     this.tmpStudent = Object.assign({}, this.student);
@@ -33,12 +28,13 @@ export class StudentDisplay {
 
   updateClickHandler() {
     this.editing = !this.editing;
-    this.changeEvent.emit({ action: 'updateStudent', args: { student: this.tmpStudent }});
+    this.emitterFunc({ action: 'updateStudent', args: { student: this.tmpStudent }});
   }
 
   deleteClickHandler() {
     this.editing = !this.editing;
-    this.changeEvent.emit({ action: 'deleteStudent', args: { student: this.tmpStudent } });
+    this.emitterFunc({ action: 'deleteStudent', args: { student: this.tmpStudent } });
+    this.dismissFunc();
   }
 
   handleChange({ target }) {

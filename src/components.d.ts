@@ -14,6 +14,7 @@ export namespace Components {
   interface AppRoot {}
   interface StudentDisplay {
     'dismissFunc': Function;
+    'emitterFunc': Function;
     'student': IStudent;
   }
   interface StudentImg {
@@ -96,7 +97,7 @@ declare namespace LocalJSX {
   interface AppRoot {}
   interface StudentDisplay {
     'dismissFunc'?: Function;
-    'onChangeEvent'?: (event: CustomEvent<any>) => void;
+    'emitterFunc'?: Function;
     'student'?: IStudent;
   }
   interface StudentImg {
@@ -126,6 +127,7 @@ declare namespace LocalJSX {
     'students'?: Array<IStudent>;
   }
   interface StudentListItem {
+    'onChangeEvent'?: (event: CustomEvent<any>) => void;
     'student'?: IStudent;
   }
   interface StudentRoot {}

@@ -22,10 +22,10 @@ export class StudentRoot {
   }
 
   componentWillLoad(): void {
-    this.worker.onmessage = ({ data }) => {
-      console.log(data.students.length);
-      if (data.students.length === 0) this.failedSearch = true;
-      this.students = data.students;
+    this.worker.onmessage = ({ data: { students } }) => {
+      console.log(students.length);
+      if (students.length === 0) this.failedSearch = true;
+      this.students = students;
     };
     this.worker.postMessage({ action: 'fetchStudents', args: {} });
   }

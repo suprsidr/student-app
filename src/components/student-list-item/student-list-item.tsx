@@ -1,4 +1,4 @@
-import { Component, Prop, h } from '@stencil/core';
+import { Component, Prop, h, Event, EventEmitter } from '@stencil/core';
 import { popoverController } from '@ionic/core';
 
 @Component({
@@ -10,14 +10,19 @@ export class StudentListItem {
 
   @Prop() student: IStudent;
 
-  // popoverController!: any;
+  @Event({
+    eventName: 'changeEvent',
+    composed: true,
+    cancelable: true,
+    bubbles: true,
+  }) changeEvent: EventEmitter;
 
   currentPopover!: any;
 
   async openPopover() {
     let popover = await popoverController.create({
       component: 'student-display',
-      componentProps: { dismissFunc: this.dismissPopover.bind(this), student: this.student },
+      componentProps: { dismissFunc: this.dismissPopover.bind(this), student: this.student, emitterFunc: this.emitterFunc.bind(this) },
       cssClass: 'pop-student'
     });
     this.currentPopover = popover;
@@ -28,6 +33,10 @@ export class StudentListItem {
     if (this.currentPopover) {
       this.currentPopover.dismiss().then(() => { this.currentPopover = null; });
     }
+  }
+
+  emitterFunc(payload) {
+    this.changeEvent.emit(payload);
   }
 
   render() {
