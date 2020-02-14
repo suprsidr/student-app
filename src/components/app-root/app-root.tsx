@@ -29,13 +29,13 @@ export class AppRoot {
               <ion-icon name="person" slot="start"></ion-icon>
               <ion-label>Students</ion-label>
             </ion-item>
+            <ion-item href="/new" onClick={() => this.menuClose()}>
+              <ion-icon name="settings" slot="start"></ion-icon>
+              <ion-label>New</ion-label>
+            </ion-item>
             <ion-item>
               <ion-icon name="chatbubbles" slot="start"></ion-icon>
               <ion-label>Messages</ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-icon name="settings" slot="start"></ion-icon>
-              <ion-label>Settings</ion-label>
             </ion-item>
           </ion-list>
         </ion-content>
@@ -53,6 +53,7 @@ export class AppRoot {
           <ion-router useHash={false}>
             <ion-route url="/" component="app-home" />
             <ion-route url="/students" component="student-root" />
+            <ion-route url="/new" component="student-new" />
             <ion-route url="/profile/:name" component="app-profile" />
           </ion-router>
           <ion-nav />

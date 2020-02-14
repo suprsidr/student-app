@@ -34,6 +34,7 @@ export namespace Components {
   interface StudentListItem {
     'student': IStudent;
   }
+  interface StudentNew {}
   interface StudentRoot {}
 }
 
@@ -76,6 +77,12 @@ declare global {
     new (): HTMLStudentListItemElement;
   };
 
+  interface HTMLStudentNewElement extends Components.StudentNew, HTMLStencilElement {}
+  var HTMLStudentNewElement: {
+    prototype: HTMLStudentNewElement;
+    new (): HTMLStudentNewElement;
+  };
+
   interface HTMLStudentRootElement extends Components.StudentRoot, HTMLStencilElement {}
   var HTMLStudentRootElement: {
     prototype: HTMLStudentRootElement;
@@ -88,6 +95,7 @@ declare global {
     'student-img': HTMLStudentImgElement;
     'student-list': HTMLStudentListElement;
     'student-list-item': HTMLStudentListItemElement;
+    'student-new': HTMLStudentNewElement;
     'student-root': HTMLStudentRootElement;
   }
 }
@@ -130,6 +138,9 @@ declare namespace LocalJSX {
     'onChangeEvent'?: (event: CustomEvent<any>) => void;
     'student'?: IStudent;
   }
+  interface StudentNew {
+    'onChangeEvent'?: (event: CustomEvent<any>) => void;
+  }
   interface StudentRoot {}
 
   interface IntrinsicElements {
@@ -139,6 +150,7 @@ declare namespace LocalJSX {
     'student-img': StudentImg;
     'student-list': StudentList;
     'student-list-item': StudentListItem;
+    'student-new': StudentNew;
     'student-root': StudentRoot;
   }
 }
@@ -155,6 +167,7 @@ declare module "@stencil/core" {
       'student-img': LocalJSX.StudentImg & JSXBase.HTMLAttributes<HTMLStudentImgElement>;
       'student-list': LocalJSX.StudentList & JSXBase.HTMLAttributes<HTMLStudentListElement>;
       'student-list-item': LocalJSX.StudentListItem & JSXBase.HTMLAttributes<HTMLStudentListItemElement>;
+      'student-new': LocalJSX.StudentNew & JSXBase.HTMLAttributes<HTMLStudentNewElement>;
       'student-root': LocalJSX.StudentRoot & JSXBase.HTMLAttributes<HTMLStudentRootElement>;
     }
   }
