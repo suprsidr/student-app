@@ -109,7 +109,7 @@ export class StudentDisplay {
                   <ion-input id="location.state" debounce={300} onIonChange={(e) => this.handleChange(e)} value={student.location.state}></ion-input>
                 </ion-item>
                 <ion-item>
-                  <ion-label>Postal Code: </ion-label>
+                  <ion-label>Zip: </ion-label>
                   <ion-input id="location.postcode" debounce={300} onIonChange={(e) => this.handleChange(e)} value={student.location.postcode}></ion-input>
                 </ion-item>
                 <ion-item>
