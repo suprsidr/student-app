@@ -33,3 +33,11 @@
 .pop-student {
   --width: 95%;
 }
+
+ion-popover div.popover-content {
+      top: 60px !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      left: 0 !important;
+      margin: 0 auto;;
+}

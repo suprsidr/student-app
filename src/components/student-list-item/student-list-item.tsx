@@ -1,4 +1,5 @@
 import { Component, Prop, h } from '@stencil/core';
+import { popoverController } from '@ionic/core';
 
 @Component({
   tag: 'student-list-item',
@@ -9,12 +10,12 @@ export class StudentListItem {
 
   @Prop() student: IStudent;
 
-  popoverController!: any;
+  // popoverController!: any;
 
   currentPopover!: any;
 
   async openPopover() {
-    let popover = await this.popoverController.create({
+    let popover = await popoverController.create({
       component: 'student-display',
       componentProps: { dismissFunc: this.dismissPopover.bind(this), student: this.student },
       cssClass: 'pop-student'
@@ -40,7 +41,7 @@ export class StudentListItem {
           <h2>{`${student.name.first} ${student.name.last}`}</h2>
           <p>{student.location.city}, {student.location.state}</p>
         </ion-label>
-        <ion-popover-controller ref={(el) => this.popoverController = el as HTMLElement}></ion-popover-controller>
+        <popoverController></popoverController>
       </ion-item>
     );
   }
