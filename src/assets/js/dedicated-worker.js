@@ -41,24 +41,20 @@ function deleteStudent(student) {
 
 // New student
 function saveStudent(student) {
-  students.push(student);
-  filterStudents(previousSearch);
-  // make call to api to actually save
+  // no optomistic update as student would be missing critical data
   fetch(`${API_URL}/insert/${JSON.stringify({ admin: 'Stencil App', student })}`, {
     method: 'POST',
     mode: 'cors',
     cache: 'no-cache',
-    // credentials: 'same-origin',
     headers: {
       'Content-Type': 'application/json'
     }
-  }).then(res => {
-    if(!res.ok) {
-      console.log(res.body)
-    } else {
-      console.log(res);
-    }
-  });
+  }).then(res => res.json())
+    .then(({ result }) => {
+      students.push(result[0]);
+      filterStudents(previousSearch);
+    })
+    .catch(err => console.log(err));
 }
 
 function updateStudent(student) {
@@ -76,7 +72,6 @@ function updateStudent(student) {
     method: 'POST',
     mode: 'cors',
     cache: 'no-cache',
-    // credentials: 'same-origin',
     headers: {
       'Content-Type': 'application/json'
     }
