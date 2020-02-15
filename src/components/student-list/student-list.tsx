@@ -18,8 +18,8 @@ export class StudentList {
     this.appendItems();
   }
 
-  componentWillUpdate(args) {
-    console.log('component updated', args)
+  componentWillUpdate() {
+    console.log('component will update')
   }
 
   // TODO test for end of data
@@ -39,7 +39,7 @@ export class StudentList {
     }
   }
 
-  wait(time) {
+  wait(time: number) {
     return new Promise(resolve => {
       setTimeout(() => {
         resolve();
@@ -49,7 +49,7 @@ export class StudentList {
 
   render() {
     return [
-      <div class="main">
+      <div class="main pt40">
         <ion-list class="ion-padding">
           {this.studentList
             .map(student => (

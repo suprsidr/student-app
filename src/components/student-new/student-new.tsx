@@ -1,4 +1,4 @@
-import { Component, State, h, Event, EventEmitter } from '@stencil/core';
+import { Component, State, h, Prop } from '@stencil/core';
 
 @Component({
   tag: 'student-new',
@@ -33,12 +33,9 @@ export class StudentNew {
     modifiedby: ''
   };
 
-  @Event({
-    eventName: 'changeEvent',
-    composed: true,
-    cancelable: true,
-    bubbles: true,
-  }) changeEvent: EventEmitter;
+  @Prop() changeFunc: Function;
+
+  @Prop() dismissFunc: Function;
 
   handleChange({ target }) {
     // this is ugly
@@ -52,7 +49,8 @@ export class StudentNew {
 
   handleSave() {
     console.log(this.student);
-    this.changeEvent.emit({ action: 'saveStudent', args: { student: this.student } });
+    this.changeFunc({ action: 'saveStudent', args: { student: this.student } });
+    this.dismissFunc();
   }
 
   render() {
@@ -114,6 +112,7 @@ export class StudentNew {
           </ion-item>
         </form>
         <div class="button-container text-center">
+          <ion-button onClick={() => this.dismissFunc()}>Cancel</ion-button>
           <ion-button style={{ '--background': '#10dc60' }} onClick={() => this.handleSave()}>Save</ion-button>
         </div>
       </div>

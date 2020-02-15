@@ -34,7 +34,10 @@ export namespace Components {
   interface StudentListItem {
     'student': IStudent;
   }
-  interface StudentNew {}
+  interface StudentNew {
+    'changeFunc': Function;
+    'dismissFunc': Function;
+  }
   interface StudentRoot {}
 }
 
@@ -139,7 +142,8 @@ declare namespace LocalJSX {
     'student'?: IStudent;
   }
   interface StudentNew {
-    'onChangeEvent'?: (event: CustomEvent<any>) => void;
+    'changeFunc'?: Function;
+    'dismissFunc'?: Function;
   }
   interface StudentRoot {}
 

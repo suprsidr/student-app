@@ -52,7 +52,13 @@ function saveStudent(student) {
     headers: {
       'Content-Type': 'application/json'
     }
-  }).then(res => console.log(res));
+  }).then(res => {
+    if(!res.ok) {
+      console.log(res.body)
+    } else {
+      console.log(res);
+    }
+  });
 }
 
 function updateStudent(student) {
