@@ -89,10 +89,50 @@ function updateStudent(student) {
 }
 
 function fetchStudents() {
-  fetch(`${API_URL}/%7B%7D/0/%7B%7D/%7B%22_id%22:0%7D`)
-    .then(resp => resp.json())
-    .then((data) => {
-      students = data.map(stu => {
+  const allStudentsQuery =
+  `{
+      allStudents {
+        name {
+          first
+          last
+        }
+        dob
+        picture {
+          large
+        }
+        location {
+          street
+          city
+          state
+          postcode
+        }
+        phone
+        cell
+        email
+        major
+        gpa
+        sid
+        registered
+        modified
+        modifiedby
+      }
+    }`;
+  const options = {
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      query: allStudentsQuery
+    })
+  };
+
+  fetch(`https://suprsidr.com/api/graphql?`, options)
+    .then(res => res.json())
+    .then(({ data }) => {
+      students = data.allStudents.map(stu => {
         if (stu.sid === '2c0c044f-ee39-4114-a7e1-cc36c7a8c4ea') {
           stu.picture.large = '/assets/img/stuman.png'
         }
@@ -100,6 +140,18 @@ function fetchStudents() {
       });
       filterStudents(previousSearch);
     })
+
+  // fetch(`${API_URL}/%7B%7D/0/%7B%7D/%7B%22_id%22:0%7D`)
+  //   .then(resp => resp.json())
+  //   .then((data) => {
+  //     students = data.map(stu => {
+  //       if (stu.sid === '2c0c044f-ee39-4114-a7e1-cc36c7a8c4ea') {
+  //         stu.picture.large = '/assets/img/stuman.png'
+  //       }
+  //       return stu;
+  //     });
+  //     filterStudents(previousSearch);
+  //   })
 }
 
 function filterStudents(filter) {
