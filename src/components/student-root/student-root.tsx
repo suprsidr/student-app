@@ -18,13 +18,13 @@ export class StudentRoot {
   changeEventHandler(event: CustomEvent) {
     this.students = [];
     this.failedSearch = false;
-    console.log('Received the custom changeEvent event: ', event.detail);
+    // console.log('Received the custom changeEvent event: ', event.detail);
     this.worker.postMessage(event.detail);
   }
 
   componentWillLoad(): void {
     this.worker.onmessage = ({ data: { students } }) => {
-      console.log(students.length);
+      // console.log(students.length);
       if (students.length === 0) this.failedSearch = true;
       this.students = students;
     };

@@ -7,6 +7,8 @@ import { Component, State, h, Prop } from '@stencil/core';
 })
 export class StudentNew {
 
+  date = new Date();
+
   @State() student: IStudent = {
     name: {
       first: '',
@@ -19,7 +21,7 @@ export class StudentNew {
       postcode: ''
     },
     email: '',
-    dob: '',
+    dob: this.date,
     phone: '',
     cell: '',
     picture: {
@@ -27,9 +29,9 @@ export class StudentNew {
     },
     gpa: '',
     major: '',
-    registered: 0,
+    registered: this.date,
     sid: '',
-    modified: 0,
+    modified: this.date,
     modifiedby: ''
   };
 
@@ -48,7 +50,6 @@ export class StudentNew {
   }
 
   handleSave() {
-    console.log(this.student);
     this.changeFunc({ action: 'saveStudent', args: { student: this.student } });
     this.dismissFunc();
   }
@@ -68,7 +69,8 @@ export class StudentNew {
           </ion-item>
           <ion-item>
             <ion-label>DOB: </ion-label>
-            <ion-input id="dob" debounce={300} onIonChange={(e) => this.handleChange(e)} value={student.dob}></ion-input>
+            <ion-datetime id="dob" onIonChange={(e) => this.handleChange(e)} placeholder="Select Date"></ion-datetime>
+            {/* <ion-input id="dob" debounce={300} onIonChange={(e) => this.handleChange(e)} value={student.dob}></ion-input> */}
           </ion-item>
           <ion-item>
             <ion-label>Street: </ion-label>

@@ -37,6 +37,7 @@ export class AppRoot {
               <ion-icon name="chatbubbles" slot="start"></ion-icon>
               <ion-label>Messages</ion-label>
             </ion-item>
+            <ion-item>v.1.1</ion-item>
           </ion-list>
         </ion-content>
       </ion-menu>,

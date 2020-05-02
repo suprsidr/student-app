@@ -70,11 +70,11 @@ export class StudentDisplay {
               <p>Email: {student.email}</p>
               <p>Major: {student.major}</p>
               <p>GPA: {student.gpa}</p>
-              <p>DOB: {`${new Date(student.dob).toLocaleDateString()}`}</p>
-              <p>{`Registered: ${new Date(student.registered).toLocaleDateString()}`}</p>
-              <p>Last updated: <span class="grey-text">{new Date(student.modified).toUTCString()}</span></p>
+              <p>DOB: {`${student.dob.toLocaleDateString()}`}</p>
+              <p>{`Registered: ${student.registered.toLocaleDateString()}`}</p>
+              <p>Last updated: <span class="grey-text">{student.modified.toUTCString()}</span></p>
               <p>Modified by: <span class="grey-text">{student.modifiedby}</span></p>
-              {/* <p>ID: <span class="grey-text">{student.sid}</span></p> */}
+              <p>ID: <span class="grey-text">{student.sid}</span></p>
               <div class="button-container">
                 <ion-button onClick={() => this.editClickHandler()}>Edit</ion-button>
                 <ion-button onClick={() => this.dismissFunc()}>Close</ion-button>

@@ -18,16 +18,16 @@ declare namespace Student {
 
 interface IStudent {
   name: Student.Name,
-  dob: string,
+  dob: Date,
   picture: Student.Picture,
   location: Student.Location,
   phone: string,
   cell: string,
   email: string,
-  registered: number,
+  registered: Date,
   major: string,
   gpa: string,
   sid: string,
-  modified: number,
+  modified: Date,
   modifiedby: string
 }

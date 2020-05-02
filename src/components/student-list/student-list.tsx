@@ -19,22 +19,22 @@ export class StudentList {
   }
 
   componentWillUpdate() {
-    console.log('component will update')
+    // console.log('component will update')
   }
 
   // TODO test for end of data
   async appendItems() {
     if (this.studentList.length < this.students.length) {
-      console.log('Loading data...');
+      // console.log('Loading data...');
       await this.wait(500);
       this.infiniteScroll.complete();
       this.studentList = [
         ...this.studentList,
         ...this.students.slice(this.studentList.length, this.studentList.length + 10)
       ];
-      console.log('Done');
+      // console.log('Done');
     } else {
-      console.log('No More Data');
+      // console.log('No More Data');
       this.infiniteScroll.disabled = true;
     }
   }
