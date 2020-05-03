@@ -226,9 +226,6 @@ function fetchStudents() {
     .then(res => res.json())
     .then(({ data }) => {
       students = data.allStudents.map(stu => {
-        if (stu.sid === '2c0c044f-ee39-4114-a7e1-cc36c7a8c4ea') {
-          stu.picture.large = '/assets/img/stuman.png'
-        }
         stu.dob = new Date(stu.dob);
         stu.registered = new Date(stu.registered);
         stu.modified = new Date(stu.modified);
