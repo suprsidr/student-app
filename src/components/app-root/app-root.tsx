@@ -1,5 +1,6 @@
 import { Component, h } from '@stencil/core';
 import { menuController } from '@ionic/core';
+import * as config from '../../../package.json'
 
 @Component({
   tag: 'app-root',
@@ -37,8 +38,8 @@ export class AppRoot {
               <ion-icon name="chatbubbles" slot="start"></ion-icon>
               <ion-label>Messages</ion-label>
             </ion-item>
-            <ion-item>v.1.1</ion-item>
           </ion-list>
+          <div style={{ position: 'absolute', bottom: '4px', left: '1rem' }}>v.{config.version}</div>
         </ion-content>
       </ion-menu>,
       <div class="ion-page" id="main">
@@ -58,7 +59,7 @@ export class AppRoot {
             <ion-route url="/profile/:name" component="app-profile" />
           </ion-router>
           <ion-nav />
-        </ion-content>,
+        </ion-content>
         <menuController></menuController>
       </div>
     ];
