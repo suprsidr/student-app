@@ -10,6 +10,8 @@ export namespace Components {
     }
     interface AppRoot {
     }
+    interface CameraRoot {
+    }
     interface StudentDisplay {
         "dismissFunc": Function;
         "emitterFunc": Function;
@@ -52,6 +54,12 @@ declare global {
         prototype: HTMLAppRootElement;
         new (): HTMLAppRootElement;
     };
+    interface HTMLCameraRootElement extends Components.CameraRoot, HTMLStencilElement {
+    }
+    var HTMLCameraRootElement: {
+        prototype: HTMLCameraRootElement;
+        new (): HTMLCameraRootElement;
+    };
     interface HTMLStudentDisplayElement extends Components.StudentDisplay, HTMLStencilElement {
     }
     var HTMLStudentDisplayElement: {
@@ -91,6 +99,7 @@ declare global {
     interface HTMLElementTagNameMap {
         "app-home": HTMLAppHomeElement;
         "app-root": HTMLAppRootElement;
+        "camera-root": HTMLCameraRootElement;
         "student-display": HTMLStudentDisplayElement;
         "student-img": HTMLStudentImgElement;
         "student-list": HTMLStudentListElement;
@@ -103,6 +112,8 @@ declare namespace LocalJSX {
     interface AppHome {
     }
     interface AppRoot {
+    }
+    interface CameraRoot {
     }
     interface StudentDisplay {
         "dismissFunc"?: Function;
@@ -148,6 +159,7 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "app-home": AppHome;
         "app-root": AppRoot;
+        "camera-root": CameraRoot;
         "student-display": StudentDisplay;
         "student-img": StudentImg;
         "student-list": StudentList;
@@ -162,6 +174,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "app-home": LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
+            "camera-root": LocalJSX.CameraRoot & JSXBase.HTMLAttributes<HTMLCameraRootElement>;
             "student-display": LocalJSX.StudentDisplay & JSXBase.HTMLAttributes<HTMLStudentDisplayElement>;
             "student-img": LocalJSX.StudentImg & JSXBase.HTMLAttributes<HTMLStudentImgElement>;
             "student-list": LocalJSX.StudentList & JSXBase.HTMLAttributes<HTMLStudentListElement>;

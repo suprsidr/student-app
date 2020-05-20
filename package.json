@@ -20,6 +20,7 @@
   "devDependencies": {
     "@stencil/core": "^1.12.6",
     "@types/jest": "^25.2.1",
+    "puppeteer": "^3.1.0",
     "workbox-build": "5.1.3"
   }
 }

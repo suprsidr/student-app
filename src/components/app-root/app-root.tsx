@@ -38,6 +38,10 @@ export class AppRoot {
               <ion-icon name="chatbubbles" slot="start"></ion-icon>
               <ion-label>Messages</ion-label>
             </ion-item>
+            <ion-item href="/camera" onClick={() => this.menuClose()}>
+              <ion-icon name="camera" slot="start"></ion-icon>
+              <ion-label>Camera</ion-label>
+            </ion-item>
           </ion-list>
           <div style={{ position: 'absolute', bottom: '4px', left: '1rem' }}>v.{config.version}</div>
         </ion-content>
@@ -57,6 +61,7 @@ export class AppRoot {
             <ion-route url="/students" component="student-root" />
             <ion-route url="/new" component="student-new" />
             <ion-route url="/profile/:name" component="app-profile" />
+            <ion-route url="/camera" component="camera-root" />
           </ion-router>
           <ion-nav />
         </ion-content>
