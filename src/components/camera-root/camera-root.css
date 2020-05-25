@@ -1,3 +1,56 @@
 :host {
   display: block;
 }
+
+input[type=file] {
+  position: absolute;
+  left: -9999px;
+}
+
+.grid-box {
+  position: relative;
+  display: grid;
+  height: 80vh;
+  margin: 0;
+  place-items: center center;
+}
+
+.controls {
+  height: calc(20vh - 56px);
+}
+
+.canvas-wrapper {
+  display: inline-block;
+  position: relative;
+}
+
+.moveable {
+  position: absolute;
+  display: none;
+  top: 20px;
+  left: 20px;
+  border: dashed 1px #CCC;
+  width: 200px;
+  height: 200px;
+  padding: 5px;
+  margin: 0;
+  font: 13px Arial;
+  cursor: move;
+  z-index: 10;
+}
+
+.resize-handle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  font-size: 24px;
+  z-index: 2;
+  color: #CCC;
+  bottom: -1px;
+  right: -1px;
+  cursor: se-resize;
+}
+
+.resize-handle .gripper {
+  transform: rotate(-45deg);
+}

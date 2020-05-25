@@ -4,6 +4,9 @@ const GQL_API_URL = 'https://oomw6u5enh.execute-api.us-east-1.amazonaws.com/dev/
 
 self.onmessage = ({ data }) => {
   switch (data.action) {
+    case 'fetchStudent':
+      fetchStudent(data.args.student.sid);
+      break;
     case 'fetchStudents':
       fetchStudents();
       break;
@@ -232,6 +235,49 @@ function fetchStudents() {
         return stu;
       });
       _filterStudents(previousSearch);
+    });
+}
+
+function fetchStudent(sid) {
+  const studentQuery =
+    `{
+      student(sid: "${sid}") {
+        name {
+          first
+          last
+        }
+        dob
+        picture {
+          large
+        }
+        location {
+          street
+          city
+          state
+          postcode
+        }
+        phone
+        cell
+        email
+        major
+        gpa
+        sid
+        registered
+        modified
+        modifiedby
+      }
+    }`;
+
+  fetch(`${GQL_API_URL}?`, _getOptions(studentQuery))
+    .then(res => res.json())
+    .then(({ data }) => {
+      stu = data.student;
+      stu.dob = new Date(stu.dob);
+      stu.registered = new Date(stu.registered);
+      stu.modified = new Date(stu.modified);
+      self.postMessage({
+        student: stu
+      })
     });
 }
 

@@ -8,6 +8,8 @@ import * as config from '../../../package.json'
 })
 export class AppRoot {
 
+  worker: Worker = new Worker('/assets/js/dedicated-worker.js');
+
   menuClose() {
     menuController.close();
   }
@@ -58,10 +60,10 @@ export class AppRoot {
         <ion-content class="ion-padding">
           <ion-router useHash={false}>
             <ion-route url="/" component="app-home" />
-            <ion-route url="/students" component="student-root" />
+            <ion-route url="/students" component="student-root" componentProps={{ worker: this.worker }} />
             <ion-route url="/new" component="student-new" />
             <ion-route url="/profile/:name" component="app-profile" />
-            <ion-route url="/camera" component="camera-root" />
+            <ion-route url="/camera" component="camera-root" componentProps={{ worker: this.worker }} />
           </ion-router>
           <ion-nav />
         </ion-content>

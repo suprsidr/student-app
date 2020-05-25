@@ -1,4 +1,4 @@
-import { Component, State, h, Listen } from '@stencil/core';
+import { Component, State, Prop, h, Listen } from '@stencil/core';
 import { popoverController } from '@ionic/core';
 
 @Component({
@@ -12,7 +12,7 @@ export class StudentRoot {
 
   @State() failedSearch: boolean = false;
 
-  worker: Worker = new Worker('/assets/js/dedicated-worker.js');
+  @Prop() worker: Worker;
 
   @Listen('changeEvent')
   changeEventHandler(event: CustomEvent) {

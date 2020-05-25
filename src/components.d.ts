@@ -11,6 +11,7 @@ export namespace Components {
     interface AppRoot {
     }
     interface CameraRoot {
+        "worker": Worker;
     }
     interface StudentDisplay {
         "dismissFunc": Function;
@@ -39,6 +40,7 @@ export namespace Components {
         "dismissFunc": Function;
     }
     interface StudentRoot {
+        "worker": Worker;
     }
 }
 declare global {
@@ -114,6 +116,7 @@ declare namespace LocalJSX {
     interface AppRoot {
     }
     interface CameraRoot {
+        "worker"?: Worker;
     }
     interface StudentDisplay {
         "dismissFunc"?: Function;
@@ -155,6 +158,7 @@ declare namespace LocalJSX {
         "dismissFunc"?: Function;
     }
     interface StudentRoot {
+        "worker"?: Worker;
     }
     interface IntrinsicElements {
         "app-home": AppHome;
