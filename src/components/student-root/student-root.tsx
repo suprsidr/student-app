@@ -1,5 +1,4 @@
-import { Component, State, Prop, h, Listen } from '@stencil/core';
-import { popoverController } from '@ionic/core';
+import { Component, State, Prop, h } from '@stencil/core';
 
 @Component({
   tag: 'student-root',
@@ -14,21 +13,24 @@ export class StudentRoot {
 
   @Prop() worker: Worker;
 
-  @Listen('changeEvent')
-  changeEventHandler(event: CustomEvent) {
-    this.students = [];
-    this.failedSearch = false;
-    // console.log('Received the custom changeEvent event: ', event.detail);
-    this.worker.postMessage(event.detail);
-  }
+  router: HTMLIonRouterElement = document.querySelector('ion-router');
 
   componentWillLoad(): void {
-    this.worker.onmessage = ({ data: { students } }) => {
-      // console.log(students.length);
-      if (students.length === 0) this.failedSearch = true;
-      this.students = students;
-    };
+    const { handleMessage } = this;
+    this.worker.addEventListener('message', handleMessage.bind(this), false);
     this.worker.postMessage({ action: 'fetchStudents', args: {} });
+  }
+
+  handleMessage({ data }): void {
+    if (data.type === 'allStudents') {
+      if (data.students.length === 0) this.failedSearch = true;
+      this.students = data.students;
+    }
+  }
+
+  disconnectedCallback() {
+    const { handleMessage } = this;
+    this.worker.removeEventListener('message', handleMessage);
   }
 
   handleSearchChange({ target }): void {
@@ -38,22 +40,9 @@ export class StudentRoot {
     this.worker.postMessage({ action: 'filterStudents', args: { filter } });
   }
 
-  currentPopover!: any;
 
-  async openPopover() {
-    let popover = await popoverController.create({
-      component: 'student-new',
-      componentProps: { dismissFunc: this.dismissPopover.bind(this), changeFunc: this.changeFunc.bind(this) },
-      cssClass: 'pop-student'
-    });
-    this.currentPopover = popover;
-    return popover.present();
-  }
-
-  dismissPopover() {
-    if (this.currentPopover) {
-      this.currentPopover.dismiss().then(() => { this.currentPopover = null; });
-    }
+  navigateToNew() {
+    this.router.push(`/new`);
   }
 
   changeFunc(payload) {
@@ -65,7 +54,7 @@ export class StudentRoot {
       <ion-content class="ion-padding">
         <ion-searchbar animated debounce={1500} onIonChange={(e) => this.handleSearchChange(e)} slot="fixed"></ion-searchbar>
         <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-          <ion-fab-button onClick={() => this.openPopover()}>
+          <ion-fab-button onClick={() => this.navigateToNew()}>
             <ion-icon name="add"></ion-icon>
           </ion-fab-button>
         </ion-fab>

@@ -11,12 +11,13 @@ export namespace Components {
     interface AppRoot {
     }
     interface CameraRoot {
-        "worker": Worker;
-    }
-    interface StudentDisplay {
         "dismissFunc": Function;
         "emitterFunc": Function;
         "student": IStudent;
+    }
+    interface StudentDisplay {
+        "sid": string;
+        "worker": Worker;
     }
     interface StudentImg {
         /**
@@ -36,8 +37,7 @@ export namespace Components {
         "student": IStudent;
     }
     interface StudentNew {
-        "changeFunc": Function;
-        "dismissFunc": Function;
+        "worker": Worker;
     }
     interface StudentRoot {
         "worker": Worker;
@@ -116,12 +116,13 @@ declare namespace LocalJSX {
     interface AppRoot {
     }
     interface CameraRoot {
-        "worker"?: Worker;
-    }
-    interface StudentDisplay {
         "dismissFunc"?: Function;
         "emitterFunc"?: Function;
         "student"?: IStudent;
+    }
+    interface StudentDisplay {
+        "sid"?: string;
+        "worker"?: Worker;
     }
     interface StudentImg {
         /**
@@ -150,12 +151,10 @@ declare namespace LocalJSX {
         "students"?: Array<IStudent>;
     }
     interface StudentListItem {
-        "onChangeEvent"?: (event: CustomEvent<any>) => void;
         "student"?: IStudent;
     }
     interface StudentNew {
-        "changeFunc"?: Function;
-        "dismissFunc"?: Function;
+        "worker"?: Worker;
     }
     interface StudentRoot {
         "worker"?: Worker;

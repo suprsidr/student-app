@@ -1,4 +1,5 @@
 import { Component, State, h, Prop } from '@stencil/core';
+import { popoverController } from '@ionic/core';
 
 @Component({
   tag: 'student-new',
@@ -7,9 +8,13 @@ import { Component, State, h, Prop } from '@stencil/core';
 })
 export class StudentNew {
 
+  @Prop() worker: Worker;
+
+  router: HTMLIonRouterElement = document.querySelector('ion-router');
+
   date = new Date();
 
-  @State() student: IStudent = {
+  tmpStudent: IStudent = {
     name: {
       first: '',
       last: ''
@@ -25,7 +30,7 @@ export class StudentNew {
     phone: '',
     cell: '',
     picture: {
-      large: ''
+      large: '/assets/img/user.png'
     },
     gpa: '',
     major: '',
@@ -35,9 +40,34 @@ export class StudentNew {
     modifiedby: ''
   };
 
-  @Prop() changeFunc: Function;
+  @State() student: IStudent = Object.assign({}, this.tmpStudent);
 
-  @Prop() dismissFunc: Function;
+  currentPopover!: HTMLIonPopoverElement;
+
+  async openPopover() {
+    let popover = await popoverController.create({
+      component: 'camera-root',
+      componentProps: { dismissFunc: this.dismissPopover.bind(this), student: this.student, emitterFunc: this.handlePopoverData.bind(this) },
+      cssClass: 'pop-student'
+    });
+    this.currentPopover = popover;
+    return popover.present();
+  }
+
+  resetStudent() {
+    this.student = this.tmpStudent;
+  }
+
+  dismissPopover() {
+    if (this.currentPopover) {
+      this.currentPopover.dismiss().then(() => { this.currentPopover = null; });
+    }
+  }
+
+  handlePopoverData(student):void {
+    this.student = Object.assign({}, this.student, student);
+    this.dismissPopover();
+  }
 
   handleChange({ target }) {
     // this is ugly
@@ -50,14 +80,22 @@ export class StudentNew {
   }
 
   handleSave() {
-    this.changeFunc({ action: 'saveStudent', args: { student: this.student } });
-    this.dismissFunc();
+    this.worker.postMessage({ action: 'saveStudent', args: { student: this.student } });
+    this.goBack();
+  }
+
+  goBack(): void {
+    this.resetStudent();
+    this.router.back();
   }
 
   render() {
     const student = this.student;
     return (
       <div class="form-container">
+        <header class="text-center">
+          <student-img onClick={() => this.openPopover()} cssClass="student-image-large" src={`${student.picture.large}`} alt={`${student.name.first} ${student.name.last}`}></student-img>
+        </header>
         <form>
           <ion-list>
             <ion-item>
@@ -85,15 +123,15 @@ export class StudentNew {
             <ion-item>
               <ion-input placeholder="Phone" type="tel" id="phone" debounce={300} onIonChange={(e) => this.handleChange(e)} value={student.phone}></ion-input>
             </ion-item>
-            <ion-item>
+            {/* <ion-item>
               <ion-input placeholder="Cell" type="tel" id="cell" debounce={300} onIonChange={(e) => this.handleChange(e)} value={student.cell}></ion-input>
-            </ion-item>
+            </ion-item> */}
             <ion-item>
               <ion-input placeholder="Email" type="email" id="email" debounce={300} onIonChange={(e) => this.handleChange(e)} value={student.email}></ion-input>
             </ion-item>
-            <ion-item>
+            {/* <ion-item>
               <ion-input placeholder="Image" id="picture.large" debounce={300} onIonChange={(e) => this.handleChange(e)} value={student.picture.large}></ion-input>
-            </ion-item>
+            </ion-item> */}
             <ion-item>
               <ion-input placeholder="Major" id="major" debounce={300} onIonChange={(e) => this.handleChange(e)} value={student.major}></ion-input>
             </ion-item>
@@ -103,7 +141,7 @@ export class StudentNew {
           </ion-list>
         </form>
         <div class="button-container text-center">
-          <ion-button onClick={() => this.dismissFunc()}>Cancel</ion-button>
+          <ion-button onClick={() => this.goBack()}>Cancel</ion-button>
           <ion-button style={{ '--background': '#10dc60' }} onClick={() => this.handleSave()}>Save</ion-button>
         </div>
       </div>
