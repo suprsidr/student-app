@@ -7,26 +7,18 @@ import { Component, State, Prop, h } from '@stencil/core';
 })
 export class CameraRoot {
 
-  @Prop() worker: Worker;
+  @Prop() student: IStudent;
 
   @State() hasPhoto: boolean = false;
 
-  student: IStudent;
+  @Prop() dismissFunc: Function;
+
+  @Prop() emitterFunc: Function;
+
   inputElement: HTMLInputElement;
   canvasWrapper: HTMLElement;
   cropElement: HTMLElement;
-
-  componentWillLoad(): void {
-    this.worker.onmessage = ({ data: { student } }) => {
-      console.log(student);
-      this.student = student;
-    };
-    this.worker.postMessage({ action: 'fetchStudent', args: {
-      student: {
-        sid: '40eda845-dbf6-45c4-af81-08b64732a87e'
-      }
-     } });
-  }
+  router: HTMLIonRouterElement = document.querySelector('ion-router');
 
   activateCropper(): void {
     const el: HTMLElement = this.cropElement;
@@ -142,6 +134,8 @@ export class CameraRoot {
       const { naturalHeight, naturalWidth } = img;
       const aspect = naturalHeight / naturalWidth;
       const ancestor = ce.parentElement.parentElement;
+      parent.style.width = `${ancestor.offsetWidth}px`;
+      parent.style.height = `${ancestor.offsetWidth * aspect}px`;
       ce.height = ancestor.offsetWidth * aspect;
       ce.width = ancestor.offsetWidth;
       ctx.imageSmoothingEnabled = true;
@@ -166,6 +160,7 @@ export class CameraRoot {
     const parent: HTMLElement = this.canvasWrapper;
     const ce = parent.querySelector('canvas');
     ce.remove();
+    this.dismissFunc();
   }
 
   cropImage(): void {
@@ -183,20 +178,21 @@ export class CameraRoot {
 
     // close modal and pass dataUri
     this.student.picture.large = canvas.toDataURL('image/jpeg', 1.0);
-    this.worker.postMessage({ action: 'updateStudent', args: { student: this.student } });
+    this.emitterFunc(this.student);
+    this.dismissFunc();
   }
 
   render() {
     return (
       <ion-content class="ion-padding">
         <div class="grid-box">
-          <div ref={el => this.canvasWrapper = el as HTMLElement} class="canvas-wrapper">
+          <span ref={el => this.canvasWrapper = el as HTMLElement} class="canvas-wrapper">
             <div ref={el => this.cropElement = el as HTMLElement} class="moveable">
               <div class="resize-handle">
                 <ion-icon name="filter-outline" class="gripper"></ion-icon>
               </div>
             </div>
-          </div>
+          </span>
         </div>
         <div class="grid-box controls">
           {!this.hasPhoto &&

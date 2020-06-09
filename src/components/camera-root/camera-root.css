@@ -16,7 +16,7 @@ input[type=file] {
 }
 
 .controls {
-  height: calc(20vh - 56px);
+  height: calc(15vh - 56px);
 }
 
 .canvas-wrapper {

@@ -128,6 +128,10 @@ function updateStudent(student) {
     return stu;
   })
   _filterStudents(previousSearch);
+  self.postMessage({
+    type: 'updateStudent',
+    student: students.find(s => s.sid === student.sid)
+  })
 
   const updateStudentMutation = `
   mutation {
@@ -182,7 +186,7 @@ function updateStudent(student) {
 
   fetch(`${GQL_API_URL}?`, _getOptions(updateStudentMutation))
     .then(res => res.json())
-    .then(res => console.log(res)) // we already did the optomistic update
+    .then(({ data: { updateStudent }}) => console.log(updateStudent)) // we already did the optomistic update
     .catch(err => {
       // roll back
       students = students.map((stu) => {
@@ -196,6 +200,10 @@ function updateStudent(student) {
 }
 
 function fetchStudents() {
+  if (students.length > 0) {
+    _filterStudents(previousSearch);
+    return;
+  }
   const allStudentsQuery =
     `{
       allStudents {
@@ -239,6 +247,14 @@ function fetchStudents() {
 }
 
 function fetchStudent(sid) {
+  if (students.length > 0) {
+    const student = students.find(s => s.sid === sid);
+    if (student) self.postMessage({
+      type: 'fetchStudent',
+      student
+    })
+    return;
+  }
   const studentQuery =
     `{
       student(sid: "${sid}") {
@@ -276,6 +292,7 @@ function fetchStudent(sid) {
       stu.registered = new Date(stu.registered);
       stu.modified = new Date(stu.modified);
       self.postMessage({
+        type: 'fetchStudent',
         student: stu
       })
     });
@@ -300,10 +317,12 @@ function _filterStudents(filter) {
   if(filter.includes(':')) {
     const parts = filter.split(':');
     self.postMessage({
+      type: 'allStudents',
       students: students.filter((stu) => stu[parts[0].toLowerCase()].startsWith(parts[1].trim()))
     })
   } else {
     self.postMessage({
+      type: 'allStudents',
       students: students.filter(({ name: { first, last } }) => (`${first} ${last}`.startsWith(filter) || last.startsWith(filter)))
     })
   }
