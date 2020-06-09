@@ -14,12 +14,21 @@ export class StudentList {
 
   infiniteScroll: any;
 
-  componentDidLoad(): void {
+  componentDidLoad():void {
     this.appendItems();
   }
 
-  componentWillUpdate() {
-    // console.log('component will update')
+  componentShouldUpdate(newValue):boolean {
+    const { studentList } = this;
+    newValue.forEach(stu => {
+      for (var i in studentList) {
+        if (studentList[i].sid === stu.sid) {
+          studentList[i] = Object.assign({}, stu);
+          break;
+        }
+      }
+    });
+    return true;
   }
 
   // TODO test for end of data
